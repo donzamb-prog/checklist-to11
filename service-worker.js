@@ -1,11 +1,11 @@
-const CACHE_NAME = 'checklist-to11-v5'; // Aumentamos para v4 para forçar o celular a atualizar
+const CACHE_NAME = 'checklist-to11-v6'; // Atualizado para v6
 const ASSETS = [
   './',
   'index.html',
   'manifest.json',
   'service-worker.js',
-  'icon-192.png',
-  'icon-512.png'
+  'icons/icon-192.png',
+  'icons/icon-512.png'
 ];
 
 // O restante do código (install, activate, fetch) permanece igualzinho!
