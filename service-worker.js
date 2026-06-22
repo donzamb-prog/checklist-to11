@@ -1,4 +1,4 @@
-const CACHE_NAME = 'checklist-to11-v4'; // Aumentamos para v4 para forçar o celular a atualizar
+const CACHE_NAME = 'checklist-to11-v5'; // Aumentamos para v4 para forçar o celular a atualizar
 const ASSETS = [
   './',
   'index.html',
