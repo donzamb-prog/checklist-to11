@@ -1,3 +1,19 @@
+/*
+=========================================================
+checklist-to11
+Copyright (c) 2026 Donizete Zambeli
+
+Licenciado conforme os termos do arquivo LICENSE.
+
+Repositório oficial:
+https://github.com/donzamb-prog/checklist-acidentes
+
+Desenvolvido por Donizete Zambeli
+Projeto Checklist de Acidentes
+checklist-to11
+=========================================================
+*/
+
 const CACHE_NAME = 'checklist-to11-v6'; // Atualizado para v6
 const ASSETS = [
   './',
