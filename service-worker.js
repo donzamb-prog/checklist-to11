@@ -6,7 +6,7 @@ Copyright (c) 2026 Donizete Zambeli
 Licenciado conforme os termos do arquivo LICENSE.
 
 Repositório oficial:
-https://github.com/donzamb-prog/checklist-acidentes
+https://github.com/donzamb-prog/checklist-to11
 
 Desenvolvido por Donizete Zambeli
 Projeto Checklist de Acidentes
@@ -14,7 +14,7 @@ checklist-to11
 =========================================================
 */
 
-const CACHE_NAME = 'checklist-to11-v7'; // Atualizado para v6
+const CACHE_NAME = 'checklist-to11-v8';
 const ASSETS = [
   './',
   'index.html',
@@ -24,9 +24,7 @@ const ASSETS = [
   'icons/icon-512.png'
 ];
 
-// O restante do código (install, activate, fetch) permanece igualzinho!
-
-// Instalação do Service Worker e armazenamento dos arquivos em cache
+// Instalação do Service Worker e armazenamento inicial
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -36,7 +34,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Ativação e limpeza de caches antigos
+// Ativação e remoção de caches antigos
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -53,11 +51,30 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Intercepta as requisições para rodar offline
+// Estratégia Network First com Fallback para Cache (Garante atualizações online e funcionamento offline)
 self.addEventListener('fetch', (event) => {
+  // Ignora requisições que não sejam GET (ex: envio de dados)
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      return cachedResponse || fetch(event.request);
-    })
+    fetch(event.request)
+      .then((response) => {
+        if (response && response.status === 200) {
+          const resClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, resClone));
+        }
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          // Se requisitar navegação de página e estiver offline
+          if (event.request.mode === 'navigate') {
+            return caches.match('./index.html');
+          }
+        });
+      })
   );
 });
