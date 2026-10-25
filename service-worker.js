@@ -14,7 +14,7 @@ checklist-to11
 =========================================================
 */
 
-const CACHE_NAME = 'checklist-to11-v8';
+const CACHE_NAME = 'checklist-to11-v9';
 const ASSETS = [
   './',
   'index.html',
